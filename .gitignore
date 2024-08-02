@@ -1,0 +1,9 @@
+*.vsidx
+bin/
+obj/
+Debug/
+obj/Debug/
+net8.0/
+/obj/Debug/net8.0/
+.vs/
+NZWalkAPI/obj/Debug/net8.0/

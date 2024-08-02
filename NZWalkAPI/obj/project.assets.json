@@ -433,11 +433,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Raghav 2024 System Backup\\Study Material\\ASP .NET Core\\ASP.Net Core Web API\\NZWalk\\NZWalkAPI\\NZWalkAPI.csproj",
+      "projectUniqueName": "D:\\Raghav 2024 System Backup\\Study Material\\ASP .NET Core\\ASP.Net Core Web API\\NzWalkAPI\\NZWalkAPI\\NZWalkAPI.csproj",
       "projectName": "NZWalkAPI",
-      "projectPath": "D:\\Raghav 2024 System Backup\\Study Material\\ASP .NET Core\\ASP.Net Core Web API\\NZWalk\\NZWalkAPI\\NZWalkAPI.csproj",
+      "projectPath": "D:\\Raghav 2024 System Backup\\Study Material\\ASP .NET Core\\ASP.Net Core Web API\\NzWalkAPI\\NZWalkAPI\\NZWalkAPI.csproj",
       "packagesPath": "C:\\Users\\deeps\\.nuget\\packages\\",
-      "outputPath": "D:\\Raghav 2024 System Backup\\Study Material\\ASP .NET Core\\ASP.Net Core Web API\\NZWalk\\NZWalkAPI\\obj\\",
+      "outputPath": "D:\\Raghav 2024 System Backup\\Study Material\\ASP .NET Core\\ASP.Net Core Web API\\NzWalkAPI\\NZWalkAPI\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\deeps\\AppData\\Roaming\\NuGet\\NuGet.Config",
