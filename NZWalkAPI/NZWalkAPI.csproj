@@ -4,7 +4,10 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <InvariantGlobalization>true</InvariantGlobalization>
+	  <!--Commented by Raghvendra to resolve "Only the invariant culture is supported in globalization-invariant mode." 
+	  That occored during initial update-migration command on 02-Aug-2024-->
+	  <!--<InvariantGlobalization>true</InvariantGlobalization>-->
+	  <InvariantGlobalization>false</InvariantGlobalization>
   </PropertyGroup>
 
   <ItemGroup>

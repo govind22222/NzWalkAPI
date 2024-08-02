@@ -1,13 +1,16 @@
 *.vsidx
 bin/
-obj/
 Debug/
+obj/
 obj/Debug/
 net8.0/
 /obj/Debug/net8.0/
 .vs/
+/NZWalkAPI/obj/
+/NZWalkAPI/obj
+NZWalkAPI/obj
 NZWalkAPI/obj/
-obj/
+/obj/
 /NZWalkAPI/obj/Debug/net8.0/NZWalkAPI.assets.cache
 /NZWalkAPI/obj/Debug/net8.0/NZWalkAPI.csproj.AssemblyReference.cache
 /NZWalkAPI/obj/NZWalkAPI.csproj.nuget.g.props
@@ -15,3 +18,6 @@ obj/
 /NZWalkAPI/obj/NZWalkAPI.csproj.nuget.g.targets
 /NZWalkAPI/obj/project.assets.json
 /NZWalkAPI/obj/project.nuget.cache
+/NZWalkAPI/obj/Debug/net8.0/NZWalkAPI.AssemblyInfo.cs
+/NZWalkAPI/obj/Debug/net8.0/NZWalkAPI.AssemblyInfoInputs.cache
+/NZWalkAPI/obj/Debug/net8.0/NZWalkAPI.GeneratedMSBuildEditorConfig.editorconfig
