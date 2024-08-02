@@ -6,4 +6,12 @@ obj/Debug/
 net8.0/
 /obj/Debug/net8.0/
 .vs/
-NZWalkAPI/obj/Debug/net8.0/
+NZWalkAPI/obj/
+obj/
+/NZWalkAPI/obj/Debug/net8.0/NZWalkAPI.assets.cache
+/NZWalkAPI/obj/Debug/net8.0/NZWalkAPI.csproj.AssemblyReference.cache
+/NZWalkAPI/obj/NZWalkAPI.csproj.nuget.g.props
+/NZWalkAPI/obj/NZWalkAPI.csproj.nuget.dgspec.json
+/NZWalkAPI/obj/NZWalkAPI.csproj.nuget.g.targets
+/NZWalkAPI/obj/project.assets.json
+/NZWalkAPI/obj/project.nuget.cache
