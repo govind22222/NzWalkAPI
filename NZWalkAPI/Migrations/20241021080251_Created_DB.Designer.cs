@@ -12,8 +12,8 @@ using NZWalkAPI.DB;
 namespace NZWalkAPI.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    [Migration("20240802103237_Initial migration")]
-    partial class Initialmigration
+    [Migration("20241021080251_Created_DB")]
+    partial class Created_DB
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
