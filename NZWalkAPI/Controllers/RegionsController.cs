@@ -121,6 +121,31 @@ namespace NZWalkAPI.Controllers
             }
         }
 
+        [HttpDelete]
+        [Route("{id:guid}")]
+        public IActionResult DeleteRegion([FromRoute] Guid id)
+        {
+            var region= _db.Regions.FirstOrDefault(x=>x.Id==id);
+            if (region != null) 
+            {
+                _db.Regions.Remove(region);
+                _db.SaveChanges();
+                //return Ok(region);
+
+                var regionDTO = new RegionDTO
+                {
+                    Id = region.Id,
+                    RegionName = region.Name,
+                    Code = region.Code,
+                    ImageUrl = region.RegionImageUrl
+                };
+                return Ok(regionDTO);
+            }
+            else 
+            { 
+                return NotFound(); 
+            }            
+        }
 
 
     }
