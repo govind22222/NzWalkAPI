@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using NZWalkAPI.DB;
 using NZWalkAPI.Models;
@@ -20,9 +21,9 @@ namespace NZWalkAPI.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAllRegion()
+        public async Task<IActionResult> GetAllRegion()
         {
-            var regionsList = _db.Regions.ToList();
+            var regionsList = await _db.Regions.ToListAsync();
             var regionDto = new List<RegionDTO>();
             foreach (var region in regionsList)
             {
@@ -43,10 +44,10 @@ namespace NZWalkAPI.Controllers
         }
 
         [HttpGet]
-        [Route("{id:guid}")]
-        public IActionResult GetRegionById([FromRoute] Guid id)
+        [Route("{id:guid}")] // Denotes that is will be type of GUID.
+        public async Task<IActionResult> GetRegionById([FromRoute] Guid id)  //[FromRoute] denotes that guid will be received from  route
         {
-            var region = _db.Regions.FirstOrDefault(x => x.Id == id);
+            var region = await _db.Regions.FirstOrDefaultAsync(x => x.Id == id);
             if (region == null)
             {
                 return NotFound();
@@ -55,6 +56,7 @@ namespace NZWalkAPI.Controllers
             {
                 var regionDto = new RegionDTO()
                 {
+                    Id= region.Id,
                     RegionName = region.Name,
                     Code = region.Code,
                     ImageUrl = region.RegionImageUrl
@@ -64,7 +66,8 @@ namespace NZWalkAPI.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateRegion([FromBody] AddRegionDTO addRegionDTO)
+        // [FromBody] denotes that AddRegionDTO will be received from body.
+        public async Task<IActionResult> CreateRegion([FromBody] AddRegionDTO addRegionDTO)
         {
             if (addRegionDTO != null)
             {
@@ -74,8 +77,8 @@ namespace NZWalkAPI.Controllers
                     Code = addRegionDTO.Code,
                     RegionImageUrl = addRegionDTO.RegionImageUrl
                 };
-                _db.Regions.Add(regionModel);
-                _db.SaveChanges();
+               await _db.Regions.AddAsync(regionModel);
+               await  _db.SaveChangesAsync();
                 var regDTO = new RegionDTO()
                 {
                     Id = regionModel.Id,
@@ -95,18 +98,18 @@ namespace NZWalkAPI.Controllers
         }
 
         [HttpPut]
-        [Route("{id:guid}") ]
-        public  IActionResult UpdateRegion([FromRoute]Guid id, [FromBody]AddRegionDTO updateRegDTO)
+        [Route("{id:guid}")]
+        public async Task<IActionResult> UpdateRegion([FromRoute] Guid id, [FromBody] AddRegionDTO updateRegDTO)
         {
-            var region = _db.Regions.FirstOrDefault(x=> x.Id==id);
-            if (region!= null)
+            var region = await _db.Regions.FirstOrDefaultAsync(x => x.Id == id);
+            if (region != null)
             {
                 //Updating the data that is retrived from the DB.
                 region.Name = updateRegDTO.Name;
                 region.Code = updateRegDTO.Code;
-                region.RegionImageUrl = updateRegDTO.RegionImageUrl;               
+                region.RegionImageUrl = updateRegDTO.RegionImageUrl;
                 _db.Regions.Update(region);
-                _db.SaveChanges();
+                 await _db.SaveChangesAsync();
                 var regDTO = new AddRegionDTO
                 {
                     Name = region.Name,
@@ -123,13 +126,13 @@ namespace NZWalkAPI.Controllers
 
         [HttpDelete]
         [Route("{id:guid}")]
-        public IActionResult DeleteRegion([FromRoute] Guid id)
+        public async Task<IActionResult> DeleteRegion([FromRoute] Guid id)
         {
-            var region= _db.Regions.FirstOrDefault(x=>x.Id==id);
-            if (region != null) 
+            var region = await _db.Regions.FirstOrDefaultAsync(x => x.Id == id);
+            if (region != null)
             {
                 _db.Regions.Remove(region);
-                _db.SaveChanges();
+                await _db.SaveChangesAsync();
                 //return Ok(region);
 
                 var regionDTO = new RegionDTO
@@ -141,10 +144,10 @@ namespace NZWalkAPI.Controllers
                 };
                 return Ok(regionDTO);
             }
-            else 
-            { 
-                return NotFound(); 
-            }            
+            else
+            {
+                return NotFound();
+            }
         }
 
 
