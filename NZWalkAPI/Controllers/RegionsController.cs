@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using NZWalkAPI.DB;
 using NZWalkAPI.Models;
 using NZWalkAPI.Models.DTOs;
+using NZWalkAPI.Repository.IRepository;
 
 namespace NZWalkAPI.Controllers
 {
@@ -15,15 +16,17 @@ namespace NZWalkAPI.Controllers
     public class RegionsController : ControllerBase
     {
         private readonly AppDBContext _db;
-        public RegionsController(AppDBContext db)
+        private readonly IRegions _regions;
+        public RegionsController(AppDBContext db, IRegions regions)
         {
             _db = db;
+            _regions = regions;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAllRegion()
         {
-            var regionsList = await _db.Regions.ToListAsync();
+            var regionsList = await _regions.GetRegionsAsync();
             var regionDto = new List<RegionDTO>();
             foreach (var region in regionsList)
             {

@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using NZWalkAPI.DB;
+using NZWalkAPI.Repository;
+using NZWalkAPI.Repository.IRepository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +16,9 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// Injected Service to the Service pipeline, Now it can be used across the application using Dependency Injection.
+builder.Services.AddScoped<IRegions, RegionService>();
 
 var app = builder.Build();
 
