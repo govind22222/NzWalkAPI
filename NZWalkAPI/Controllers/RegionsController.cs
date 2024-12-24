@@ -50,7 +50,7 @@ namespace NZWalkAPI.Controllers
         [Route("{id:guid}")] // Denotes that is will be type of GUID.
         public async Task<IActionResult> GetRegionById([FromRoute] Guid id)  //[FromRoute] denotes that guid will be received from  route
         {
-            var region = await _db.Regions.FirstOrDefaultAsync(x => x.Id == id);
+            var region = await _regions.GetRegionById(id);
             if (region == null)
             {
                 return NotFound();
@@ -80,8 +80,7 @@ namespace NZWalkAPI.Controllers
                     Code = addRegionDTO.Code,
                     RegionImageUrl = addRegionDTO.RegionImageUrl
                 };
-               await _db.Regions.AddAsync(regionModel);
-               await  _db.SaveChangesAsync();
+                regionModel= await _regions.AddRegion(regionModel);
                 var regDTO = new RegionDTO()
                 {
                     Id = regionModel.Id,
@@ -89,7 +88,6 @@ namespace NZWalkAPI.Controllers
                     Code = regionModel.Code,
                     ImageUrl = regionModel.RegionImageUrl
                 };
-                //return Ok();
                 Guid regModelId = regionModel.Id;
                 Guid regDTOId = regDTO.Id;
                 return CreatedAtAction(nameof(GetRegionById), new { id = regDTO.Id }, regDTO);
@@ -104,20 +102,21 @@ namespace NZWalkAPI.Controllers
         [Route("{id:guid}")]
         public async Task<IActionResult> UpdateRegion([FromRoute] Guid id, [FromBody] AddRegionDTO updateRegDTO)
         {
-            var region = await _db.Regions.FirstOrDefaultAsync(x => x.Id == id);
-            if (region != null)
+            var regionModel= new Region
             {
-                //Updating the data that is retrived from the DB.
-                region.Name = updateRegDTO.Name;
-                region.Code = updateRegDTO.Code;
-                region.RegionImageUrl = updateRegDTO.RegionImageUrl;
-                _db.Regions.Update(region);
-                 await _db.SaveChangesAsync();
-                var regDTO = new AddRegionDTO
+                Name= updateRegDTO.Name,
+                Code = updateRegDTO.Code,
+                RegionImageUrl = updateRegDTO.RegionImageUrl
+            };
+             regionModel = await _regions.UpdateRegion(id, regionModel);
+            if (regionModel != null)
+            {                
+                var regDTO = new RegionDTO
                 {
-                    Name = region.Name,
-                    Code = region.Code,
-                    RegionImageUrl = region.RegionImageUrl
+                    Id= regionModel.Id,
+                    RegionName = regionModel.Name,
+                    Code = regionModel.Code,
+                    ImageUrl = regionModel.RegionImageUrl
                 };
                 return Ok(regDTO);
             }
@@ -131,26 +130,19 @@ namespace NZWalkAPI.Controllers
         [Route("{id:guid}")]
         public async Task<IActionResult> DeleteRegion([FromRoute] Guid id)
         {
-            var region = await _db.Regions.FirstOrDefaultAsync(x => x.Id == id);
-            if (region != null)
-            {
-                _db.Regions.Remove(region);
-                await _db.SaveChangesAsync();
-                //return Ok(region);
-
-                var regionDTO = new RegionDTO
-                {
-                    Id = region.Id,
-                    RegionName = region.Name,
-                    Code = region.Code,
-                    ImageUrl = region.RegionImageUrl
-                };
-                return Ok(regionDTO);
-            }
-            else
+            var region = await _regions.DeleteRegion(id);
+            if (region == null)
             {
                 return NotFound();
             }
+            var regionDTO = new RegionDTO
+            {
+                Id = region.Id,
+                RegionName = region.Name,
+                Code = region.Code,
+                ImageUrl = region.RegionImageUrl
+            };
+            return Ok(regionDTO);
         }
 
 
