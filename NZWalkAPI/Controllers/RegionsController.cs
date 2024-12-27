@@ -59,8 +59,8 @@ namespace NZWalkAPI.Controllers
             }
             else
             {
-                //Below code has been replaced by Automapper.
-                var regionDto = _mapper.Map<RegionDTO>(region);
+                //var regionDto = _mapper.Map<RegionDTO>(region);
+                ////Below code has been replaced by Automapper.
                 //var regionDto = new RegionDTO()
                 //{
                 //    Id= region.Id,
@@ -68,7 +68,7 @@ namespace NZWalkAPI.Controllers
                 //    Code = region.Code,
                 //    ImageUrl = region.RegionImageUrl
                 //};
-                return Ok(regionDto);
+                return Ok(_mapper.Map<RegionDTO>(region));
             }
         }
 
@@ -78,20 +78,16 @@ namespace NZWalkAPI.Controllers
         {
             if (addRegionDTO != null)
             {
-                var regionModel = new Region
-                {
-                    Name = addRegionDTO.Name,
-                    Code = addRegionDTO.Code,
-                    RegionImageUrl = addRegionDTO.RegionImageUrl
-                };
-                regionModel= await _regions.AddRegion(regionModel);
-                var regDTO = new RegionDTO()
-                {
-                    Id = regionModel.Id,
-                    RegionName = regionModel.Name,
-                    Code = regionModel.Code,
-                    ImageUrl = regionModel.RegionImageUrl
-                };
+                // Converting the AddRegionDTO to RegionModel.
+                var regionModel = _mapper.Map<Region>(addRegionDTO);
+                //var regionModel = new Region
+                //{
+                //    Name = addRegionDTO.Name,
+                //    Code = addRegionDTO.Code,
+                //    RegionImageUrl = addRegionDTO.RegionImageUrl
+                //};
+                regionModel = await _regions.AddRegion(regionModel);
+                var regDTO= _mapper.Map<RegionDTO>(regionModel);                
                 Guid regModelId = regionModel.Id;
                 Guid regDTOId = regDTO.Id;
                 return CreatedAtAction(nameof(GetRegionById), new { id = regDTO.Id }, regDTO);
@@ -114,14 +110,16 @@ namespace NZWalkAPI.Controllers
             };
              regionModel = await _regions.UpdateRegion(id, regionModel);
             if (regionModel != null)
-            {                
-                var regDTO = new RegionDTO
-                {
-                    Id= regionModel.Id,
-                    RegionName = regionModel.Name,
-                    Code = regionModel.Code,
-                    ImageUrl = regionModel.RegionImageUrl
-                };
+            {   
+                var regDTO = _mapper.Map<RegionDTO>(regionModel);
+                // Code Replaced by above line of Automapper.
+                //var regDTO = new RegionDTO
+                //{
+                //    Id= regionModel.Id,
+                //    Name = regionModel.Name,
+                //    Code = regionModel.Code,
+                //    RegionImageUrl = regionModel.RegionImageUrl
+                //};
                 return Ok(regDTO);
             }
             else
@@ -139,13 +137,16 @@ namespace NZWalkAPI.Controllers
             {
                 return NotFound();
             }
-            var regionDTO = new RegionDTO
-            {
-                Id = region.Id,
-                RegionName = region.Name,
-                Code = region.Code,
-                ImageUrl = region.RegionImageUrl
-            };
+
+            var regionDTO= _mapper.Map<RegionDTO>(region);
+            // Code Replaced by above line of Automapper.
+            //var regionDTO = new RegionDTO
+            //{
+            //    Id = region.Id,
+            //    Name = region.Name,
+            //    Code = region.Code,
+            //    RegionImageUrl = region.RegionImageUrl
+            //};
             return Ok(regionDTO);
         }
 

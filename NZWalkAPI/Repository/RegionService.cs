@@ -18,10 +18,6 @@ namespace NZWalkAPI.Repository
         public async Task<List<Region>> GetRegionsAsync()
         {
             var regions = await _db.Regions.ToListAsync();
-            //if (regions!=null)
-            //{
-            //    return regions;
-            //}
             return regions;
         }
 
@@ -29,9 +25,7 @@ namespace NZWalkAPI.Repository
         {
             return await _db.Regions.FirstOrDefaultAsync(r => r.Id == id);
         }
-        //AddRegion
-        // UpdateRegion
-        // DeleteRegion
+
         public async Task<Region?> AddRegion(Region region)
         {
             using var transaction = _db.Database.BeginTransaction();
@@ -92,10 +86,6 @@ namespace NZWalkAPI.Repository
                 return null;
             }
         }
-
-
-
-
 
     }
 }

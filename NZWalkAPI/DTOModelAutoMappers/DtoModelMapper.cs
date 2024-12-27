@@ -9,6 +9,7 @@ namespace NZWalkAPI.DTOModelAutoMappers
         public DtoModelMapper()
         {
             CreateMap<Region, RegionDTO>().ReverseMap(); 
+            CreateMap<AddRegionDTO, Region>().ReverseMap();
         }
     }
 }
