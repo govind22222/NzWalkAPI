@@ -102,12 +102,7 @@ namespace NZWalkAPI.Controllers
         [Route("{id:guid}")]
         public async Task<IActionResult> UpdateRegion([FromRoute] Guid id, [FromBody] AddRegionDTO updateRegDTO)
         {
-            var regionModel= new Region
-            {
-                Name= updateRegDTO.Name,
-                Code = updateRegDTO.Code,
-                RegionImageUrl = updateRegDTO.RegionImageUrl
-            };
+            var regionModel = _mapper.Map<Region>(updateRegDTO);            
              regionModel = await _regions.UpdateRegion(id, regionModel);
             if (regionModel != null)
             {   
