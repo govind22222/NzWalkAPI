@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
@@ -17,32 +18,33 @@ namespace NZWalkAPI.Controllers
     {
         private readonly AppDBContext _db;
         private readonly IRegions _regions;
-        public RegionsController(AppDBContext db, IRegions regions)
+        private readonly IMapper _mapper;
+        public RegionsController(AppDBContext db, IRegions regions, IMapper mapper)
         {
             _db = db;
             _regions = regions;
+            _mapper = mapper;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAllRegion()
         {
             var regionsList = await _regions.GetRegionsAsync();
-            var regionDto = new List<RegionDTO>();
-            foreach (var region in regionsList)
-            {
-                regionDto.Add(new RegionDTO()
-                {
-                    Id = region.Id,
-                    RegionName = region.Name,
-                    Code = region.Code,
-                    ImageUrl = region.RegionImageUrl
-                });
-            }
-            //var regionsList = new List<Region>
+            var regionDto= _mapper.Map<List<RegionDTO>>(regionsList);
+
+            //---- Below Code is replaced by above line code of AutoMapper----
+            //var regionDto = new List<RegionDTO>();
+            //foreach (var region in regionsList)
             //{
-            //    new Region { Id = Guid.NewGuid(), Name = "AukLand Region", Code = "AKL", RegionImageUrl = "https://picsum.photos/536/354" },
-            //    new Region{ Id= Guid.NewGuid(), Name="Willington", Code="WLT", RegionImageUrl="https://picsum.photos/id/16/367/267" }
-            //};
+            //    regionDto.Add(new RegionDTO()
+            //    {
+            //        Id = region.Id,
+            //        RegionName = region.Name,
+            //        Code = region.Code,
+            //        ImageUrl = region.RegionImageUrl
+            //    });
+            //}
+            //------------------------------------------------------
             return Ok(regionDto);
         }
 
@@ -57,13 +59,15 @@ namespace NZWalkAPI.Controllers
             }
             else
             {
-                var regionDto = new RegionDTO()
-                {
-                    Id= region.Id,
-                    RegionName = region.Name,
-                    Code = region.Code,
-                    ImageUrl = region.RegionImageUrl
-                };
+                //Below code has been replaced by Automapper.
+                var regionDto = _mapper.Map<RegionDTO>(region);
+                //var regionDto = new RegionDTO()
+                //{
+                //    Id= region.Id,
+                //    RegionName = region.Name,
+                //    Code = region.Code,
+                //    ImageUrl = region.RegionImageUrl
+                //};
                 return Ok(regionDto);
             }
         }
