@@ -20,6 +20,7 @@ builder.Services.AddSwaggerGen();
 
 // Injected Service to the Service pipeline, Now it can be used across the application using Dependency Injection.
 builder.Services.AddScoped<IRegions, RegionService>();
+builder.Services.AddScoped<IWalk, WalkService>();
 //Injected the AutoMapper class to the Service pipeline in order to use it at Controllers by DI.
 builder.Services.AddAutoMapper( typeof(DtoModelMapper));
 
