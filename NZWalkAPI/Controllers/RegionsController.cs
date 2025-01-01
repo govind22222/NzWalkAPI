@@ -31,20 +31,6 @@ namespace NZWalkAPI.Controllers
         {
             var regionsList = await _regions.GetRegionsAsync();
             var regionDto= _mapper.Map<List<RegionDTO>>(regionsList);
-
-            //---- Below Code is replaced by above line code of AutoMapper----
-            //var regionDto = new List<RegionDTO>();
-            //foreach (var region in regionsList)
-            //{
-            //    regionDto.Add(new RegionDTO()
-            //    {
-            //        Id = region.Id,
-            //        RegionName = region.Name,
-            //        Code = region.Code,
-            //        ImageUrl = region.RegionImageUrl
-            //    });
-            //}
-            //------------------------------------------------------
             return Ok(regionDto);
         }
 

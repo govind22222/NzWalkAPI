@@ -14,14 +14,14 @@ namespace NZWalkAPI.Controllers
     {
         private readonly IMapper _mapper;
         private readonly IWalk _walk;
-        public WalksController(IWalk walk,  IMapper mapper) 
+        public WalksController(IWalk walk, IMapper mapper)
         {
             _mapper = mapper;
             _walk = walk;
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] AddWalkDTO adWalkDto )
+        public async Task<IActionResult> Create([FromBody] AddWalkDTO adWalkDto)
         {
             //Used auto-mapper to map From WalkDto to Walk Model.
             var walkModel = _mapper.Map<Walk>(adWalkDto);
@@ -29,11 +29,27 @@ namespace NZWalkAPI.Controllers
             {
                 return BadRequest();
             }
-
-            walkModel = await _walk.AddWalk(walkModel);
-            var wlkDTO= _mapper.Map<WalkDTO>(walkModel);
+            walkModel = await _walk.AddWalkAsync(walkModel);
             return Ok(_mapper.Map<WalkDTO>(walkModel));
         }
+
+        //   api/walk/GetAllWalks
+        [HttpGet]
+        public async Task<IActionResult> GetAllWalks()
+        {
+            var walkModelList= await _walk.GetAllWalksAsync();
+            if (walkModelList == null)
+            {
+                return NotFound();
+            }
+            var walkDTOList= _mapper.Map<List<WalkDTO>>(walkModelList);
+            return Ok(walkDTOList);
+        }
+        
+        //    GetWalkAsyncById
+        //    UpdateWalkAsync
+        //    DeleteWalkAsync
+
 
     }
 }
