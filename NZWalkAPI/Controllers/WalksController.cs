@@ -37,19 +37,29 @@ namespace NZWalkAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllWalks()
         {
-            var walkModelList= await _walk.GetAllWalksAsync();
+            var walkModelList = await _walk.GetAllWalksAsync();
             if (walkModelList == null)
             {
                 return NotFound();
             }
-            var walkDTOList= _mapper.Map<List<WalkDTO>>(walkModelList);
+            var walkDTOList = _mapper.Map<List<WalkDTO>>(walkModelList);
             return Ok(walkDTOList);
         }
-        
-        //    GetWalkAsyncById
+
+
+        [HttpGet]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> GetWalkAsyncById(Guid id)
+        {
+            var walkModel = await _walk.GetWalkByIdAsync(id);
+            if (walkModel == null)
+            {
+                return NotFound();
+            }
+            return Ok(_mapper.Map<WalkDTO>(walkModel));
+        }
+
         //    UpdateWalkAsync
         //    DeleteWalkAsync
-
-
     }
 }

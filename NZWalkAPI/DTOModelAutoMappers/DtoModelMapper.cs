@@ -4,16 +4,17 @@ using NZWalkAPI.Models.DTOs;
 
 namespace NZWalkAPI.DTOModelAutoMappers
 {
-    public class DtoModelMapper :Profile
+    public class DtoModelMapper : Profile
     {
         public DtoModelMapper()
         {
-            CreateMap<Region, RegionDTO>().ReverseMap(); 
+            CreateMap<Region, RegionDTO>().ReverseMap();
             CreateMap<AddRegionDTO, Region>().ReverseMap();
 
             // Added to map from AddWalkDTO to Walk Model vice-versa.
             CreateMap<AddWalkDTO, Walk>().ReverseMap();
             CreateMap<WalkDTO, Walk>().ReverseMap();
+            CreateMap<DifficultyDTO, Difficulty>().ReverseMap();
         }
     }
 }

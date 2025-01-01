@@ -11,5 +11,7 @@
         //Added DifficultyId and RegionId for Relationship with Region and Difficulty Table.
         public Guid DifficultyId { get; set; }
         public Guid RegionId { get; set; }
+        public DifficultyDTO Difficulty { get; set; }
+        public RegionDTO Region { get; set; }
     }
 }
