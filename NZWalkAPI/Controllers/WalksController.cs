@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using NZWalkAPI.Filters;
 using NZWalkAPI.Models;
 using NZWalkAPI.Models.DTOs;
 using NZWalkAPI.Repository.IRepository;
@@ -22,13 +23,14 @@ namespace NZWalkAPI.Controllers
         }
 
         [HttpPost]
+        [ModelValidationFilter]
         public async Task<IActionResult> Create([FromBody] AddUpdateWalkDTO adWalkDto)
         {
             //Used auto-mapper to map From WalkDto to Walk Model.
             var walkModel = _mapper.Map<Walk>(adWalkDto);
-            if (walkModel == null || !ModelState.IsValid)
+            if (walkModel == null)
             {
-                return BadRequest(ModelState);
+                return BadRequest();
             }
             walkModel = await _walk.AddWalkAsync(walkModel);
             return Ok(_mapper.Map<WalkDTO>(walkModel));
@@ -62,11 +64,12 @@ namespace NZWalkAPI.Controllers
 
         [HttpPut]
         [Route("{walkId:guid}")]
+        [ModelValidationFilter]
         public async Task<IActionResult> UpdateWalk([FromRoute] Guid walkId, AddUpdateWalkDTO updateWalkDto)
         {
-            if (walkId == Guid.Empty || updateWalkDto == null || !ModelState.IsValid)
+            if (walkId == Guid.Empty || updateWalkDto == null)
             {
-                return BadRequest(ModelState);
+                return BadRequest();
             }
             var walkModel = await _walk.UpdateWalkAsync(walkId, _mapper.Map<Walk>(updateWalkDto));
             if (walkModel == null)

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using NZWalkAPI.DB;
+using NZWalkAPI.Filters;
 using NZWalkAPI.Models;
 using NZWalkAPI.Models.DTOs;
 using NZWalkAPI.Repository.IRepository;
@@ -50,10 +51,11 @@ namespace NZWalkAPI.Controllers
         }
 
         [HttpPost]
+        [ModelValidationFilter]
         // [FromBody] denotes that AddRegionDTO will be received from body.
         public async Task<IActionResult> CreateRegion([FromBody] AddUpdateRegionDTO addRegionDTO)
         {
-            if (addRegionDTO != null && ModelState.IsValid)
+            if (addRegionDTO != null)
             {
                 // Converting the AddRegionDTO to RegionModel.
                 var regionModel = _mapper.Map<Region>(addRegionDTO);
@@ -63,17 +65,18 @@ namespace NZWalkAPI.Controllers
             }
             else
             {
-                return BadRequest(ModelState);
+                return BadRequest();
             }
         }
 
         [HttpPut]
         [Route("{id:guid}")]
+        [ModelValidationFilter]
         public async Task<IActionResult> UpdateRegion([FromRoute] Guid id, [FromBody] AddUpdateRegionDTO updateRegDTO)
         {
             var regionModel = _mapper.Map<Region>(updateRegDTO);            
              regionModel = await _regions.UpdateRegion(id, regionModel);
-            if (regionModel != null && ModelState.IsValid)
+            if (regionModel != null)
             {   
                 var regDTO = _mapper.Map<RegionDTO>(regionModel);                
                 return Ok(regDTO);
