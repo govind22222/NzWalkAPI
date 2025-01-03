@@ -26,9 +26,9 @@ namespace NZWalkAPI.Controllers
         {
             //Used auto-mapper to map From WalkDto to Walk Model.
             var walkModel = _mapper.Map<Walk>(adWalkDto);
-            if (walkModel == null)
+            if (walkModel == null || !ModelState.IsValid)
             {
-                return BadRequest();
+                return BadRequest(ModelState);
             }
             walkModel = await _walk.AddWalkAsync(walkModel);
             return Ok(_mapper.Map<WalkDTO>(walkModel));
@@ -64,9 +64,9 @@ namespace NZWalkAPI.Controllers
         [Route("{walkId:guid}")]
         public async Task<IActionResult> UpdateWalk([FromRoute] Guid walkId, AddUpdateWalkDTO updateWalkDto)
         {
-            if (walkId == Guid.Empty || updateWalkDto == null)
+            if (walkId == Guid.Empty || updateWalkDto == null || !ModelState.IsValid)
             {
-                return BadRequest();
+                return BadRequest(ModelState);
             }
             var walkModel = await _walk.UpdateWalkAsync(walkId, _mapper.Map<Walk>(updateWalkDto));
             if (walkModel == null)
