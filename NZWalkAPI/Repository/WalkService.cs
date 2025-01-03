@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.ActionConstraints;
 using Microsoft.EntityFrameworkCore;
 using NZWalkAPI.DB;
 using NZWalkAPI.Models;
+using NZWalkAPI.Models.DTOs;
 using NZWalkAPI.Repository.IRepository;
 
 namespace NZWalkAPI.Repository
@@ -48,14 +49,57 @@ namespace NZWalkAPI.Repository
             }
             return walk;
         }
-        //public async Task<Walk> UpdateWalkAsync()
-        //{
-        //    return Ok();
-        //}
-        //public async Task<Walk> DeleteWalkAsync()
-        //{
-        //    return Ok();
-        //}
+
+        public async Task<Walk?> UpdateWalkAsync(Guid walkId, Walk walk)
+        {
+            var walkData = await _db.Walks.FirstOrDefaultAsync(w => w.Id == walkId);
+
+            if (walkId != Guid.Empty && walk != null && walkData != null)
+            {
+                walkData.Name = walk.Name;
+                walkData.Description = walk.Description;
+                walkData.LengthInKm = walk.LengthInKm;
+                walkData.WalkImageUrl = walk.WalkImageUrl;
+                walkData.DifficultyId = walk.DifficultyId;
+                walkData.RegionId = walk.RegionId;
+                using var transaction = await _db.Database.BeginTransactionAsync();
+                _db.Walks.Update(walkData);
+                if (!Convert.ToBoolean(await _db.SaveChangesAsync()))
+                {
+                    return null;
+                }
+                else
+                {
+                    await transaction.CommitAsync();
+                    return walkData;
+                }
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public async Task<Walk?> DeleteWalkAsync(Guid walkDeleteId)
+        {
+            var walkModel = await _db.Walks.FirstOrDefaultAsync(w => w.Id == walkDeleteId);
+            if (walkModel == null)
+            {
+                return null;
+            }
+            using var transaction = await _db.Database.BeginTransactionAsync();
+            _db.Walks.Remove(walkModel);
+            if (!Convert.ToBoolean(await _db.SaveChangesAsync()))
+            {
+                await transaction.RollbackAsync();
+                return null;
+            }
+            else
+            {
+                await transaction.CommitAsync();
+                return walkModel;
+            }
+        }
 
     }
 }

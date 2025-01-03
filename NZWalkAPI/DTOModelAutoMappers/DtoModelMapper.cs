@@ -12,7 +12,7 @@ namespace NZWalkAPI.DTOModelAutoMappers
             CreateMap<AddRegionDTO, Region>().ReverseMap();
 
             // Added to map from AddWalkDTO to Walk Model vice-versa.
-            CreateMap<AddWalkDTO, Walk>().ReverseMap();
+            CreateMap<AddUpdateWalkDTO, Walk>().ReverseMap();
             CreateMap<WalkDTO, Walk>().ReverseMap();
             CreateMap<DifficultyDTO, Difficulty>().ReverseMap();
         }
