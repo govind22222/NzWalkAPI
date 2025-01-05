@@ -38,9 +38,9 @@ namespace NZWalkAPI.Controllers
 
         //   api/walk/GetAllWalks
         [HttpGet]
-        public async Task<IActionResult> GetAllWalks()
+        public async Task<IActionResult> GetAllWalks([FromQuery] string ? filterBy, [FromQuery] string? filterQuery, [FromQuery] bool? isAsc)
         {
-            var walkModelList = await _walk.GetAllWalksAsync();
+            var walkModelList = await _walk.GetAllWalksAsync( filterBy, filterQuery);
             if (walkModelList == null)
             {
                 return NotFound();
@@ -89,7 +89,7 @@ namespace NZWalkAPI.Controllers
             {
                 return BadRequest();
             }
-            var walkData = _walk.DeleteWalkAsync(walkId);
+            var walkData =await _walk.DeleteWalkAsync(walkId);
             if (walkData == null)
             {
                 return NotFound();
