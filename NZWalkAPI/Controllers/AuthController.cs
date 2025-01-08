@@ -16,6 +16,8 @@ namespace NZWalkAPI.Controllers
         }
 
         [HttpPost]
+        [Route("Register")]
+        // api/auth/register
         public async Task<IActionResult> Register([FromBody] RegisterDTO regDto)
         {
             var identityUser = new IdentityUser
@@ -33,6 +35,25 @@ namespace NZWalkAPI.Controllers
                 }
             }
             return BadRequest("Error occurred and user not created.");
+        }
+
+        [HttpPost]
+        [Route("Login")]
+        // api/auth/login
+        public async Task<IActionResult> Login([FromBody] LoginRequestDTO loginReqDto)
+        {
+            var user= await _userManager.FindByEmailAsync(loginReqDto.UserId);
+            if (user != null)
+            {
+                var isPassValid = await _userManager.CheckPasswordAsync(user, loginReqDto.Password);
+                if (isPassValid) 
+                {
+                    //Create Token after successful validation.
+                    return Ok("Login Successful !!");
+                }
+            }
+            return BadRequest("Username or password incorrect !!");
+
         }
     }
 }
