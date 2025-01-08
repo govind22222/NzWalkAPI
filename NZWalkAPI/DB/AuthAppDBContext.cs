@@ -22,14 +22,14 @@ namespace NZWalkAPI.DB
                 {
                     Id=writeRole,
                     Name="WriteRole",
-                    NormalizedName= "writer".ToUpper(),
+                    NormalizedName= "WriteRole".ToUpper(),
                     ConcurrencyStamp =writeRole
                 },
                 new IdentityRole
                 {
                     Id=readRole,
                     Name="ReadRole",
-                    NormalizedName="Reader".ToUpper(),
+                    NormalizedName="ReadRole".ToUpper(),
                     ConcurrencyStamp=readRole
                 }
             };
