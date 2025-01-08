@@ -1,8 +1,11 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using NZWalkAPI.DB;
 using NZWalkAPI.DTOModelAutoMappers;
 using NZWalkAPI.Repository;
 using NZWalkAPI.Repository.IRepository;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,7 +25,20 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IRegions, RegionService>();
 builder.Services.AddScoped<IWalk, WalkService>();
 //Injected the AutoMapper class to the Service pipeline in order to use it at Controllers by DI.
-builder.Services.AddAutoMapper( typeof(DtoModelMapper));
+builder.Services.AddAutoMapper(typeof(DtoModelMapper));
+
+//JWT Configuration By Raghav.
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options => options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+        ValidAudience = builder.Configuration["Jwt:Audience"],
+        IssuerSigningKey= new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+    });
 
 var app = builder.Build();
 
@@ -34,7 +50,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -15,6 +16,7 @@ namespace NZWalkAPI.Controllers
     [Route("api/[controller]")]
     // Below attribute denotes that RegionsController is type of ApiController
     [ApiController]
+    [Authorize]
     public class RegionsController : ControllerBase
     {
         private readonly AppDBContext _db;
