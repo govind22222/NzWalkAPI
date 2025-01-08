@@ -7,7 +7,7 @@ namespace NZWalkAPI.DB
 {
     public class AppDBContext : DbContext
     {
-        public AppDBContext(DbContextOptions dbContextOptions) : base(dbContextOptions)
+        public AppDBContext(DbContextOptions<AppDBContext> dbContextOptions) : base(dbContextOptions)
         {
         }
 

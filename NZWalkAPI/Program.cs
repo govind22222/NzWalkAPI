@@ -15,6 +15,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<AppDBContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("NzConnStr")));
 
+//Added other Database for user Role and Credential.
+builder.Services.AddDbContext<AuthAppDBContext>(options=> options.UseSqlServer(builder.Configuration.GetConnectionString("NzAuthDBConnStr")));
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

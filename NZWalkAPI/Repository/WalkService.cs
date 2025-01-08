@@ -37,44 +37,55 @@ namespace NZWalkAPI.Repository
 
         public async Task<List<Walk>> GetAllWalksAsync(string? filterBy = null, string? filterQuery = null, bool isAsc = true)
         {
-            //var walk = await _db.Walks.Include(w => w.Difficulty).Include(w => w.Region).ToListAsync();
-            var walk = _db.Walks.Include(w => w.Difficulty).Include(w => w.Region).AsQueryable();
-            if (string.IsNullOrWhiteSpace(filterBy) == false && string.IsNullOrWhiteSpace(filterQuery) == false)
+            try
             {
-                var filterCol = filterBy.ToString().ToLower();
-                switch (filterCol)
+                //var walk = await _db.Walks.Include(w => w.Difficulty).Include(w => w.Region).ToListAsync();
+                var walk = _db.Walks.Include(w => w.Difficulty).Include(w => w.Region).AsQueryable();
+                if (string.IsNullOrWhiteSpace(filterBy) == false && string.IsNullOrWhiteSpace(filterQuery) == false)
                 {
-                    case "name":
-                        walk = walk.Where(w => w.Name.Contains(filterCol, StringComparison.OrdinalIgnoreCase));
-                        walk = isAsc == true ? walk.OrderBy(w => w.Name) : walk.OrderByDescending(w => w.Name);
-                        break;
-                    case "description":
-                        walk = walk.Where(w => w.Description.Contains(filterCol, StringComparison.OrdinalIgnoreCase));
-                        walk = isAsc == true ? walk.OrderBy(w => w.Description) : walk.OrderByDescending(w => w.Description);
-                        break;
-                    case "length":
-                        walk = walk.Where(w => w.LengthInKm.ToString().Contains(filterCol, StringComparison.OrdinalIgnoreCase));
-                        walk = isAsc == true ? walk.OrderBy(w => w.LengthInKm) : walk.OrderByDescending(w => w.LengthInKm);
-                        break;
-                    case "image":
-                        walk = walk.Where(w => w.WalkImageUrl.Contains(filterCol, StringComparison.OrdinalIgnoreCase));
-                        walk = isAsc == true ? walk.OrderBy(w => w.WalkImageUrl) : walk.OrderByDescending(w => w.WalkImageUrl);
-                        break;
-                    case "difficultyid":
-                        walk = walk.Where(w => w.Difficulty.Id.ToString().Contains(filterCol, StringComparison.OrdinalIgnoreCase));
-                        walk = isAsc == true ? walk.OrderBy(w => w.Difficulty.Id) : walk.OrderByDescending(w => w.Difficulty.Id);
-                        break;
-                    case "regionid":
-                        walk = walk.Where(w => w.Region.Id.ToString().Contains(filterCol, StringComparison.OrdinalIgnoreCase));
-                        walk = isAsc == true ? walk.OrderBy(w => w.Region.Id) : walk.OrderByDescending(w => w.Region.Id);
-                        break;
-                    default:
-                        walk = walk.Where(w => w.Id.ToString().Contains(filterCol, StringComparison.OrdinalIgnoreCase));
-                        break;
-                        //walk = isAsc == true ? walk.OrderBy(w => w.Name) : walk.OrderByDescending(w => w.Name);
+                    var filterCol = filterBy.ToString().ToLower();
+                    var searchText = filterQuery.ToString().ToLower();
+                    switch (filterCol)
+                    {
+                        case "name":
+                            walk = walk.Where(w => w.Name.Contains(searchText));
+                            walk = isAsc == true ? walk.OrderBy(w => w.Name) : walk.OrderByDescending(w => w.Name);
+                            break;
+                        case "description":
+                            walk = walk.Where(w => w.Description.Contains(searchText));
+                            walk = isAsc == true ? walk.OrderBy(w => w.Description) : walk.OrderByDescending(w => w.Description);
+                            break;
+                        case "length":
+                            walk = walk.Where(w => w.LengthInKm.ToString().Contains(searchText));
+                            walk = isAsc == true ? walk.OrderBy(w => w.LengthInKm) : walk.OrderByDescending(w => w.LengthInKm);
+                            break;
+                        case "image":
+                            walk = walk.Where(w => w.WalkImageUrl.Contains(searchText));
+                            walk = isAsc == true ? walk.OrderBy(w => w.WalkImageUrl) : walk.OrderByDescending(w => w.WalkImageUrl);
+                            break;
+                        case "difficultyid":
+                            walk = walk.Where(w => w.Difficulty.Id.ToString().Contains(searchText));
+                            walk = isAsc == true ? walk.OrderBy(w => w.Difficulty.Id) : walk.OrderByDescending(w => w.Difficulty.Id);
+                            break;
+                        case "regionid":
+                            walk = walk.Where(w => w.Region.Id.ToString().Contains(searchText));
+                            walk = isAsc == true ? walk.OrderBy(w => w.Region.Id) : walk.OrderByDescending(w => w.Region.Id);
+                            break;
+                        default:
+                            walk = walk.Where(w => w.Id.ToString().Contains(searchText));
+                            break;
+                            //walk = isAsc == true ? walk.OrderBy(w => w.Name) : walk.OrderByDescending(w => w.Name);
+                    }
                 }
+                var walklistdata = await walk.ToListAsync();
+                return walklistdata;
             }
-            return await walk.ToListAsync();
+            catch (Exception ex)
+            {
+                string msg = ex.Message;
+                return null;
+            }
+            
         }
 
         public async Task<Walk?> GetWalkByIdAsync(Guid walkId)
