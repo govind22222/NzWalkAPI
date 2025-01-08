@@ -13,6 +13,7 @@ namespace NZWalkAPI.DB
         //Seeding Roles to DB by Raghav on 08-Jan-25.
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            base.OnModelCreating(builder);
             var writeRole = "af962303-b468-423d-bdf4-7d8589e94687";
             var readRole = "b4e0b098-c394-495d-88e4-3420711577b9";
             var roles = new List<IdentityRole>
@@ -27,7 +28,7 @@ namespace NZWalkAPI.DB
                 new IdentityRole
                 {
                     Id=readRole,
-                    Name="Reader",
+                    Name="ReadRole",
                     NormalizedName="Reader".ToUpper(),
                     ConcurrencyStamp=readRole
                 }
