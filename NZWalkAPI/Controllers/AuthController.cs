@@ -43,7 +43,8 @@ namespace NZWalkAPI.Controllers
         }
 
 
-        // id-raghav@gmail.com   pass-raghav@123
+        // id-raghav@gmail.com   pass-raghav@123   Role- WriterRole
+        // id-demo@gmail.com   pass-demo@123       Role- ReaderRole
         [HttpPost]
         [Route("Login")]
         // api/auth/login

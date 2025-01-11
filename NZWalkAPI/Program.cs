@@ -7,6 +7,7 @@ using NZWalkAPI.DTOModelAutoMappers;
 using NZWalkAPI.Repository;
 using NZWalkAPI.Repository.IRepository;
 using System.Text;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,7 +22,36 @@ builder.Services.AddDbContext<AuthAppDBContext>(options => options.UseSqlServer(
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+//builder.Services.AddSwaggerGen();
+//Added some code by Raghav to use Authorication Header to the Swagger to byPass Postman
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new OpenApiInfo { Title = "NZWalk API", Version = "v1" });
+    options.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = JwtBearerDefaults.AuthenticationScheme
+    });
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+        new OpenApiSecurityScheme
+        {
+            Reference= new OpenApiReference
+            {
+                Type= ReferenceType.SecurityScheme,
+                Id= JwtBearerDefaults.AuthenticationScheme
+            },
+            Scheme = "Oauth2",
+            Name= JwtBearerDefaults.AuthenticationScheme,
+            In= ParameterLocation.Header
+        },
+        new List<string>()
+        }
+    });
+});
 
 // Injected Service to the Service pipeline, Now it can be used across the application using Dependency Injection.
 builder.Services.AddScoped<IRegions, RegionService>();
