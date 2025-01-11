@@ -16,7 +16,7 @@ namespace NZWalkAPI.Controllers
     [Route("api/[controller]")]
     // Below attribute denotes that RegionsController is type of ApiController
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class RegionsController : ControllerBase
     {
         private readonly AppDBContext _db;
@@ -30,6 +30,7 @@ namespace NZWalkAPI.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles ="WriteRole")]
         public async Task<IActionResult> GetAllRegion()
         {
             var regionsList = await _regions.GetRegionsAsync();
@@ -39,6 +40,7 @@ namespace NZWalkAPI.Controllers
 
         [HttpGet]
         [Route("{id:guid}")] // Denotes that is will be type of GUID.
+        [Authorize(Roles = "ReadRole")]
         public async Task<IActionResult> GetRegionById([FromRoute] Guid id)  //[FromRoute] denotes that guid will be received from  route
         {
             var region = await _regions.GetRegionById(id);
@@ -54,6 +56,7 @@ namespace NZWalkAPI.Controllers
 
         [HttpPost]
         [ModelValidationFilter]
+        [Authorize(Roles = "WriteRole")]
         // [FromBody] denotes that AddRegionDTO will be received from body.
         public async Task<IActionResult> CreateRegion([FromBody] AddUpdateRegionDTO addRegionDTO)
         {
@@ -74,6 +77,7 @@ namespace NZWalkAPI.Controllers
         [HttpPut]
         [Route("{id:guid}")]
         [ModelValidationFilter]
+        [Authorize(Roles = "WriteRole")]
         public async Task<IActionResult> UpdateRegion([FromRoute] Guid id, [FromBody] AddUpdateRegionDTO updateRegDTO)
         {
             var regionModel = _mapper.Map<Region>(updateRegDTO);            
@@ -91,6 +95,7 @@ namespace NZWalkAPI.Controllers
 
         [HttpDelete]
         [Route("{id:guid}")]
+        [Authorize(Roles = "WriteRole")]
         public async Task<IActionResult> DeleteRegion([FromRoute] Guid id)
         {
             var region = await _regions.DeleteRegion(id);
@@ -98,16 +103,7 @@ namespace NZWalkAPI.Controllers
             {
                 return NotFound();
             }
-
             var regionDTO= _mapper.Map<RegionDTO>(region);
-            // Code Replaced by above line of Automapper.
-            //var regionDTO = new RegionDTO
-            //{
-            //    Id = region.Id,
-            //    Name = region.Name,
-            //    Code = region.Code,
-            //    RegionImageUrl = region.RegionImageUrl
-            //};
             return Ok(regionDTO);
         }
 

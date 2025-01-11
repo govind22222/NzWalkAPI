@@ -15,7 +15,7 @@ namespace NZWalkAPI.Controllers
 
         public AuthController(UserManager<IdentityUser> userManager, IAuth auth)
         {
-                _userManager = userManager;
+            _userManager = userManager;
             _auth = auth;
 
         }
@@ -28,13 +28,13 @@ namespace NZWalkAPI.Controllers
             var identityUser = new IdentityUser
             {
                 UserName = regDto.UserName,
-                Email  = regDto.UserName
+                Email = regDto.UserName
             };
-           var identityResponse= await _userManager.CreateAsync(identityUser, regDto.Password);
+            var identityResponse = await _userManager.CreateAsync(identityUser, regDto.Password);
             if (identityResponse.Succeeded && regDto.Role != null && regDto.Role.Any())
             {
                 identityResponse = await _userManager.AddToRolesAsync(identityUser, regDto.Role);
-                if (identityResponse.Succeeded) 
+                if (identityResponse.Succeeded)
                 {
                     return Ok("User created successfully, Please login !!");
                 }
@@ -42,23 +42,25 @@ namespace NZWalkAPI.Controllers
             return BadRequest("Error occurred and user not created.");
         }
 
+
+        // id-raghav@gmail.com   pass-raghav@123
         [HttpPost]
         [Route("Login")]
         // api/auth/login
         public async Task<IActionResult> Login([FromBody] LoginRequestDTO loginReqDto)
         {
-            var user= await _userManager.FindByEmailAsync(loginReqDto.UserId);
+            var user = await _userManager.FindByEmailAsync(loginReqDto.UserId);
             if (user != null)
             {
                 var isPassValid = await _userManager.CheckPasswordAsync(user, loginReqDto.Password);
-                if (isPassValid) 
+                if (isPassValid)
                 {
                     var roles = await _userManager.GetRolesAsync(user);
                     var jwtToken = _auth.CreateJwtToken(user, roles.ToList());
                     //Create Token after successful validation.
-                    var jwtResponse = new LoginResponseDTO 
-                    { 
-                        JwtToken= jwtToken
+                    var jwtResponse = new LoginResponseDTO
+                    {
+                        JwtToken = jwtToken
                     };
                     return Ok(jwtResponse);
                 }
