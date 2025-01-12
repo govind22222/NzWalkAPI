@@ -25,7 +25,7 @@ namespace NZWalkAPI.Repository
             await img.FormFile.CopyToAsync(filestream);
 
             //Providing custom dynamic location of file.
-            var urlFilePath = $"{_httpContext.HttpContext.Request.Scheme}://{_httpContext.HttpContext.Request.Host}/{_httpContext.HttpContext.Request.PathBase}/Uploads/Images/{img.Name}{img.Extension}";
+            var urlFilePath = $"{_httpContext.HttpContext.Request.Scheme}://{_httpContext.HttpContext.Request.Host}/{_httpContext.HttpContext.Request.PathBase}Uploads/Images/{img.Name}{img.Extension}";
             img.Path = urlFilePath;
 
             //Inserting the image path to the db.
