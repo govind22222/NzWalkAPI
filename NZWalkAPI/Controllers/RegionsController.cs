@@ -9,6 +9,7 @@ using NZWalkAPI.Filters;
 using NZWalkAPI.Models;
 using NZWalkAPI.Models.DTOs;
 using NZWalkAPI.Repository.IRepository;
+using System.Text.Json;
 
 namespace NZWalkAPI.Controllers
 {
@@ -22,20 +23,32 @@ namespace NZWalkAPI.Controllers
         private readonly AppDBContext _db;
         private readonly IRegions _regions;
         private readonly IMapper _mapper;
-        public RegionsController(AppDBContext db, IRegions regions, IMapper mapper)
+        private readonly ILogger<RegionsController> _logger;
+        public RegionsController(AppDBContext db, IRegions regions, IMapper mapper, ILogger<RegionsController> logger)
         {
             _db = db;
             _regions = regions;
             _mapper = mapper;
+            _logger = logger;
         }
 
         [HttpGet]
-        [Authorize(Roles ="WriteRole")]
+        //[Authorize(Roles ="WriteRole")]
         public async Task<IActionResult> GetAllRegion()
         {
-            var regionsList = await _regions.GetRegionsAsync();
-            var regionDto= _mapper.Map<List<RegionDTO>>(regionsList);
-            return Ok(regionDto);
+            try
+            {
+                throw new Exception("This is custom exception by Raghav- ");
+                var regionsList = await _regions.GetRegionsAsync();
+                var regionDto = _mapper.Map<List<RegionDTO>>(regionsList);
+                _logger.LogInformation($"Accessed region information: {JsonSerializer.Serialize(regionDto)}");
+                return Ok(regionDto);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                throw;
+            }            
         }
 
         [HttpGet]
