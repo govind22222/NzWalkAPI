@@ -10,6 +10,7 @@ using System.Text;
 using Microsoft.OpenApi.Models;
 using Microsoft.Extensions.FileProviders;
 using Serilog;
+using NZWalkAPI.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -119,6 +120,9 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
+
+//------------Added Custom Middleware by Raghvendra for Global Exception Handling--------------
+app.UseMiddleware<ExceptionHandlerMiddleware>();
 
 //----------------Added By Raghav to access the Static File(When API is running) that is stored in Uploads/Images  on 12-Jan-25.------------------
 app.UseStaticFiles(new StaticFileOptions
