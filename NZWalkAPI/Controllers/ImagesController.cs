@@ -1,6 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using NZWalkAPI.Models;
 using NZWalkAPI.Models.DTOs;
+using NZWalkAPI.Repository.IRepository;
 
 namespace NZWalkAPI.Controllers
 {
@@ -8,6 +11,15 @@ namespace NZWalkAPI.Controllers
     [ApiController]
     public class ImagesController : ControllerBase
     {
+        private readonly IImage _image;
+        private readonly IMapper _mapper;
+
+        public ImagesController(IImage image, IMapper mapper)
+        {
+            _image = image;
+            _mapper = mapper;
+        }
+
         [HttpPost]
         [Route("upload")]
         public async Task<IActionResult> UploadImage([FromForm] ImageAddUpdateDTO imgDto)
@@ -17,10 +29,21 @@ namespace NZWalkAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
-            return Ok();
+            var imgModel = _mapper.Map<Image>(imgDto);
+            imgModel.Extension = Path.GetExtension(imgDto.FormFile.FileName);
+            imgModel.FileSizeInBytes = imgDto.FormFile.Length;
+
+            //var imgDTO = _mapper.Map<ImageAddUpdateDTO>(await _image.UploadFile(imgModel));
+            imgModel = await _image.UploadFile(imgModel);
+            if (imgModel == null)
+            {
+                return BadRequest();
+            }
+            return Ok(imgModel);
         }
 
-        public void ValidateFileUpload(ImageAddUpdateDTO imgDto)
+
+        private void ValidateFileUpload(ImageAddUpdateDTO imgDto)
         {
             var allowedExten = new string[] { ".jpg", ".jpeg", ".png" };
             if (!allowedExten.Contains(Path.GetExtension(imgDto.FormFile.FileName)))
@@ -29,7 +52,7 @@ namespace NZWalkAPI.Controllers
             }
             if (imgDto.FormFile.Length > 10000000)
             {
-                ModelState.AddModelError("FormFile", "File size is mote than 10MB, Please upload file max upto 10MB.");
+                ModelState.AddModelError("FormFile", "File size is mote than 10MB, Please upload file max up to 10MB.");
             }
         }
     }

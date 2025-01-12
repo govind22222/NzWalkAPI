@@ -15,6 +15,7 @@ namespace NZWalkAPI.DTOModelAutoMappers
             CreateMap<AddUpdateWalkDTO, Walk>().ReverseMap();
             CreateMap<WalkDTO, Walk>().ReverseMap();
             CreateMap<DifficultyDTO, Difficulty>().ReverseMap();
+            CreateMap<ImageAddUpdateDTO, Image>().ReverseMap();
         }
     }
 }

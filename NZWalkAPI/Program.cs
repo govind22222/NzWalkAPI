@@ -20,6 +20,9 @@ builder.Services.AddDbContext<AppDBContext>(options => options.UseSqlServer(buil
 builder.Services.AddDbContext<AuthAppDBContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("NzAuthDBConnStr")));
 
 builder.Services.AddControllers();
+
+//Added by Raghvendra to access all the information related to the http request.
+builder.Services.AddHttpContextAccessor();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 //builder.Services.AddSwaggerGen();
@@ -57,6 +60,7 @@ builder.Services.AddSwaggerGen(options =>
 builder.Services.AddScoped<IRegions, RegionService>();
 builder.Services.AddScoped<IWalk, WalkService>();
 builder.Services.AddScoped<IAuth, AuthService>();
+builder.Services.AddScoped<IImage, ImageService>();
 
 //Injected the AutoMapper class to the Service pipeline in order to use it at Controllers by DI.
 builder.Services.AddAutoMapper(typeof(DtoModelMapper));
