@@ -1,0 +1,6 @@
+@WEbAPI_Versioning_HostAddress = http://localhost:5023
+
+GET {{WEbAPI_Versioning_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

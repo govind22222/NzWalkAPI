@@ -12,15 +12,15 @@ using NZWalkAPI.DB;
 namespace NZWalkAPI.Migrations.AuthAppDB
 {
     [DbContext(typeof(AuthAppDBContext))]
-    [Migration("20250108105859_Added UserRoleDB")]
-    partial class AddedUserRoleDB
+    [Migration("20250218090350_Re-CreatingAuthDB")]
+    partial class ReCreatingAuthDB
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.11")
+                .HasAnnotation("ProductVersion", "8.0.13")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -57,14 +57,14 @@ namespace NZWalkAPI.Migrations.AuthAppDB
                             Id = "af962303-b468-423d-bdf4-7d8589e94687",
                             ConcurrencyStamp = "af962303-b468-423d-bdf4-7d8589e94687",
                             Name = "WriteRole",
-                            NormalizedName = "WRITER"
+                            NormalizedName = "WRITEROLE"
                         },
                         new
                         {
                             Id = "b4e0b098-c394-495d-88e4-3420711577b9",
                             ConcurrencyStamp = "b4e0b098-c394-495d-88e4-3420711577b9",
                             Name = "ReadRole",
-                            NormalizedName = "READER"
+                            NormalizedName = "READROLE"
                         });
                 });
 

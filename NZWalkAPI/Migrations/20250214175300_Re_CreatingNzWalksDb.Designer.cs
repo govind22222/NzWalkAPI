@@ -12,15 +12,15 @@ using NZWalkAPI.DB;
 namespace NZWalkAPI.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    [Migration("20241227182428_Seeded Difficulty and Region To DB")]
-    partial class SeededDifficultyandRegionToDB
+    [Migration("20250214175300_Re_CreatingNzWalksDb")]
+    partial class Re_CreatingNzWalksDb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.7")
+                .HasAnnotation("ProductVersion", "8.0.13")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -55,6 +55,36 @@ namespace NZWalkAPI.Migrations
                             Id = new Guid("28c50daa-4b44-4d0d-ae98-17aad8cb2ded"),
                             Name = "Hard"
                         });
+                });
+
+            modelBuilder.Entity("NZWalkAPI.Models.Image", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Extension")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("FileSizeInBytes")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Path")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Images");
                 });
 
             modelBuilder.Entity("NZWalkAPI.Models.Region", b =>

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace NZWalkAPI.Migrations.AuthAppDB
 {
     /// <inheritdoc />
-    public partial class AddedUserRoleDB : Migration
+    public partial class ReCreatingAuthDB : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -163,8 +163,8 @@ namespace NZWalkAPI.Migrations.AuthAppDB
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "af962303-b468-423d-bdf4-7d8589e94687", "af962303-b468-423d-bdf4-7d8589e94687", "WriteRole", "WRITER" },
-                    { "b4e0b098-c394-495d-88e4-3420711577b9", "b4e0b098-c394-495d-88e4-3420711577b9", "ReadRole", "READER" }
+                    { "af962303-b468-423d-bdf4-7d8589e94687", "af962303-b468-423d-bdf4-7d8589e94687", "WriteRole", "WRITEROLE" },
+                    { "b4e0b098-c394-495d-88e4-3420711577b9", "b4e0b098-c394-495d-88e4-3420711577b9", "ReadRole", "READROLE" }
                 });
 
             migrationBuilder.CreateIndex(
