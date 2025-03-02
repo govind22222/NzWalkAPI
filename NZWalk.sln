@@ -5,7 +5,7 @@ VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NZWalkAPI", "NZWalkAPI\NZWalkAPI.csproj", "{F4EAC367-F83C-4741-B27F-7671E840F09B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WEbAPI_Versioning", "WEbAPI_Versioning\WEbAPI_Versioning.csproj", "{417BFD8C-1432-41FB-A586-D3E7E6A86CC0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WEbAPI_Versioning(Folder)", "WEbAPI_Versioning\WEbAPI_Versioning(Folder).csproj", "{417BFD8C-1432-41FB-A586-D3E7E6A86CC0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
