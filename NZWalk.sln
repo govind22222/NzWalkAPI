@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NZWalkAPI", "NZWalkAPI\NZWa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WEbAPI_Versioning(Folder)", "WEbAPI_Versioning\WEbAPI_Versioning(Folder).csproj", "{417BFD8C-1432-41FB-A586-D3E7E6A86CC0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPI_VersioningNugetApproach", "WebAPI_VersioningNugetApproach\WebAPI_VersioningNugetApproach.csproj", "{4CCCD3FC-3391-49AD-A331-7167CA2448EA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{417BFD8C-1432-41FB-A586-D3E7E6A86CC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{417BFD8C-1432-41FB-A586-D3E7E6A86CC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{417BFD8C-1432-41FB-A586-D3E7E6A86CC0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4CCCD3FC-3391-49AD-A331-7167CA2448EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CCCD3FC-3391-49AD-A331-7167CA2448EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CCCD3FC-3391-49AD-A331-7167CA2448EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CCCD3FC-3391-49AD-A331-7167CA2448EA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

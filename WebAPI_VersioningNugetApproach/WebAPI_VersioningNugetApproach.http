@@ -1,0 +1,6 @@
+@WebAPI_VersioningNugetApproach_HostAddress = http://localhost:5283
+
+GET {{WebAPI_VersioningNugetApproach_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
