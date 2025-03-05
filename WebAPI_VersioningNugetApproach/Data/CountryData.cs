@@ -10,9 +10,9 @@ namespace WebAPI_VersioningNugetApproach.Data
             List<Country> countries = new List<Country>()
             {
                 new Country(){Id=1, Name="India"},
-                new Country(){Id=1, Name="USA"},
-                new Country(){Id=1, Name="Austrilia"},
-                new Country(){Id=1, Name="UAE"},
+                new Country(){Id=2, Name="USA"},
+                new Country(){Id=3, Name="Austrilia"},
+                new Country(){Id=4, Name="UAE"},
             };
             return countries;
         }

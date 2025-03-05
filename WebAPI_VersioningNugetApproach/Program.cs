@@ -6,7 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
-//Added By Raghvendra to use API Versioning.
+//Added By Raghvendra to use API Versioning(Like- https://localhost:7173/api/v1/countries)
 builder.Services.AddApiVersioning(options =>
 {
     options.ReportApiVersions = true; // Enables version reporting in responses
@@ -21,18 +21,15 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-}
+    }
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();
