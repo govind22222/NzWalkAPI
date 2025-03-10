@@ -1,9 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using NZWalkAPI.DB;
 using NZWalkAPI.Filters;
 using NZWalkAPI.Models;
@@ -38,7 +35,7 @@ namespace NZWalkAPI.Controllers
         {
             try
             {
-                throw new Exception("This is custom exception by Raghav- ");
+                //throw new Exception("This is custom exception by Raghav- ");
                 var regionsList = await _regions.GetRegionsAsync();
                 var regionDto = _mapper.Map<List<RegionDTO>>(regionsList);
                 _logger.LogInformation($"Accessed region information: {JsonSerializer.Serialize(regionDto)}");
@@ -48,7 +45,7 @@ namespace NZWalkAPI.Controllers
             {
                 _logger.LogError(ex, ex.Message);
                 throw;
-            }            
+            }
         }
 
         [HttpGet]
@@ -78,7 +75,7 @@ namespace NZWalkAPI.Controllers
                 // Converting the AddRegionDTO to RegionModel.
                 var regionModel = _mapper.Map<Region>(addRegionDTO);
                 regionModel = await _regions.AddRegion(regionModel);
-                var regDTO= _mapper.Map<RegionDTO>(regionModel);  
+                var regDTO = _mapper.Map<RegionDTO>(regionModel);
                 return CreatedAtAction(nameof(GetRegionById), new { id = regDTO.Id }, regDTO);
             }
             else
@@ -93,11 +90,11 @@ namespace NZWalkAPI.Controllers
         [Authorize(Roles = "WriteRole")]
         public async Task<IActionResult> UpdateRegion([FromRoute] Guid id, [FromBody] AddUpdateRegionDTO updateRegDTO)
         {
-            var regionModel = _mapper.Map<Region>(updateRegDTO);            
-             regionModel = await _regions.UpdateRegion(id, regionModel);
+            var regionModel = _mapper.Map<Region>(updateRegDTO);
+            regionModel = await _regions.UpdateRegion(id, regionModel);
             if (regionModel != null)
-            {   
-                var regDTO = _mapper.Map<RegionDTO>(regionModel);                
+            {
+                var regDTO = _mapper.Map<RegionDTO>(regionModel);
                 return Ok(regDTO);
             }
             else
@@ -116,7 +113,7 @@ namespace NZWalkAPI.Controllers
             {
                 return NotFound();
             }
-            var regionDTO= _mapper.Map<RegionDTO>(region);
+            var regionDTO = _mapper.Map<RegionDTO>(region);
             return Ok(regionDTO);
         }
 

@@ -1,0 +1,28 @@
+﻿@model IEnumerable<NZWalksWebApp.Models.DTO.RegionsDto>
+
+<h4>API Response Page</h4>
+<div class="table mt-4">
+	<table class="table border">
+		<thead>
+			<tr>
+				<th>Region Id</th>
+				<th>Name</th>
+				<th>Code</th>
+				<th>ImageUrl</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var regionDto in Model)
+			{ 
+				<tr>
+					<td>@regionDto.Id</td>
+					<td>@regionDto.Name</td>
+					<td>@regionDto.Code</td>
+					<td>@regionDto.RegionImageUrl</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+</div>
+
+
