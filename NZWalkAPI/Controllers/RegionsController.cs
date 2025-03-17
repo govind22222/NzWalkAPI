@@ -66,7 +66,7 @@ namespace NZWalkAPI.Controllers
 
         [HttpPost]
         [ModelValidationFilter]
-        [Authorize(Roles = "WriteRole")]
+        //[Authorize(Roles = "WriteRole")]
         // [FromBody] denotes that AddRegionDTO will be received from body.
         public async Task<IActionResult> CreateRegion([FromBody] AddUpdateRegionDTO addRegionDTO)
         {
