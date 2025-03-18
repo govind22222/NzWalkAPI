@@ -54,7 +54,6 @@ namespace NZWalksWebApp.Controllers
                     RequestUri = new Uri("https://localhost:7059/api/regions"),
                     Content = new StringContent(JsonSerializer.Serialize(regionModel), Encoding.UTF8, "application/json")
                 };
-
                 var httpResponseMsg = await client.SendAsync(httpReqMessage);
                 httpResponseMsg.EnsureSuccessStatusCode(); //Ensures the API response status core in 200, if not it throws exception.
                 var response = await httpResponseMsg.Content.ReadFromJsonAsync<RegionsDto>();
@@ -80,8 +79,35 @@ namespace NZWalksWebApp.Controllers
             {
                 return View(apiResponse);
             }
-
             return View(null);
         }
+
+        [HttpPost]
+        [Route("Regions/UpdateRegionUsingAPI")]
+        public async Task<IActionResult> UpdateRegionUsingAPI([FromBody] RegionsDto region)
+        {
+            var client = _httpClient.CreateClient();
+            var httpRequetMessage = new HttpRequestMessage()
+            {
+                Method = HttpMethod.Put,
+                RequestUri = new Uri($"https://localhost:7059/api/regions/{region.Id}"),
+                Content = new StringContent(JsonSerializer.Serialize(region), Encoding.UTF8, "application/json")
+            };
+
+            var httpResponseMsg = await client.SendAsync(httpRequetMessage);
+            httpResponseMsg.EnsureSuccessStatusCode();
+
+            var response = await httpRequetMessage.Content.ReadFromJsonAsync<RegionsDto>();
+            if (response is not null && httpResponseMsg.IsSuccessStatusCode)
+            {
+                return Json(new { isSuccess = true, responseData = response, message = "Region Updated." });
+            }
+            else
+            {
+                return Json(new { isSuccess = false, message = "Region not Updated." });
+            }
+        }
+
+
     }
 }

@@ -87,7 +87,7 @@ namespace NZWalkAPI.Controllers
         [HttpPut]
         [Route("{id:guid}")]
         [ModelValidationFilter]
-        [Authorize(Roles = "WriteRole")]
+        //[Authorize(Roles = "WriteRole")]
         public async Task<IActionResult> UpdateRegion([FromRoute] Guid id, [FromBody] AddUpdateRegionDTO updateRegDTO)
         {
             var regionModel = _mapper.Map<Region>(updateRegDTO);
