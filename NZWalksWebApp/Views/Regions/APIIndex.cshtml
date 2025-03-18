@@ -12,16 +12,19 @@
 				<th>Name</th>
 				<th>Code</th>
 				<th>ImageUrl</th>
+				<th>Action</th>
 			</tr>
 		</thead>
 		<tbody>
 			@foreach (var regionDto in Model)
-			{ 
+			{
 				<tr>
 					<td>@regionDto.Id</td>
 					<td>@regionDto.Name</td>
 					<td>@regionDto.Code</td>
 					<td>@regionDto.RegionImageUrl</td>
+					<td><a type="button" class="btnEditData btn btn-light" asp-controller="Regions" asp-action="EditRegion" asp-route-id="@regionDto.Id">Edit</a></td>
+
 				</tr>
 			}
 		</tbody>

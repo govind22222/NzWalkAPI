@@ -1,0 +1,32 @@
+﻿@model NZWalksWebApp.Models.DTO.RegionsDto
+@{
+	ViewData["Title"] = "EditRegion";
+}
+
+@if (Model is not null)
+{
+	<div class="container">
+		<h3 class="my-3"> Edit Region</h3>
+		<form class="" id="frmEditRegion" method="post">
+			<div class="mt-2">
+				<label class="form-label">Region Id</label>
+				<input type="text" class="form-control" id="txtId" readonly value="@Model.Id" />
+			</div>
+			<div class="mt-2">
+				<label class="form-label">Region Code</label>
+				<input type="text" class="form-control" id="txtCode" value="@Model.Code" />
+			</div>
+			<div class="mt-2">
+				<label class="form-label">Name</label>
+				<input type="text" class="form-control" id="txtName" value="@Model.Name" />
+			</div>
+			<div class="mt-2">
+				<label class="form-label">Image Url</label>
+				<input type="text" class="form-control" id="txtUrl" value="@Model.RegionImageUrl" />
+			</div>
+			<div class="mt-2">
+				<button type="submit" class="btn btn-primary" id="btnEditRegion">Update</button>
+			</div>
+		</form>
+	</div>
+}

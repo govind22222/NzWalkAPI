@@ -50,7 +50,7 @@ namespace NZWalkAPI.Controllers
 
         [HttpGet]
         [Route("{id:guid}")] // Denotes that is will be type of GUID.
-        [Authorize(Roles = "ReadRole")]
+        //[Authorize(Roles = "ReadRole")]
         public async Task<IActionResult> GetRegionById([FromRoute] Guid id)  //[FromRoute] denotes that guid will be received from  route
         {
             var region = await _regions.GetRegionById(id);
@@ -116,7 +116,6 @@ namespace NZWalkAPI.Controllers
             var regionDTO = _mapper.Map<RegionDTO>(region);
             return Ok(regionDTO);
         }
-
 
     }
 }
