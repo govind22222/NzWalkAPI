@@ -60,12 +60,15 @@ namespace NZWalksWebApp.Controllers
                 {
                     return Json(new { isSuccess = true, responseData = response, message = "Region Added." });
                 }
+                else
+                {
+                    return Json(new { isSuccess = false, message = "Region not Added." });
+                }
             }
             else
             {
                 return Json(new { isSuccess = false, message = "Region not Added." });
             }
-            return Ok();
         }
 
         [HttpGet]
