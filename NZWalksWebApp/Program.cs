@@ -3,7 +3,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-//Added BY raghvendra to consume an Web API Via this project. 
+//Added BY raghvendra to consume an Web API In WebApplications project. 
 builder.Services.AddHttpClient();
 
 var app = builder.Build();
@@ -25,6 +25,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Regions}/{action=APIIndex}/{id?}");
 
 app.Run();

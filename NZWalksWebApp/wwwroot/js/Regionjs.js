@@ -58,4 +58,47 @@
         }
     });
 
-})
+    document.addEventListener("click", async (e) => {
+        try {
+            if (!e.target.matches('.btnDeleteData')) return;
+            const result = await Swal.fire({
+                title: "Are you sure want to delete this Region?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!"
+            });
+            if (result.isConfirmed) {
+                const deleteId = e.target.dataset?.id;
+                const deleteRowId = e.target.dataset?.rowId;
+                if (!deleteId || !deleteRowId || deleteId == "" || deleteRowId == "") {
+                    console.error('RegionId or RegionRowId not found');
+                    return;
+                }
+                const response = await fetch(`/Regions/DeleteRegionUsingAPI/${deleteId}`, {
+                    method: 'delete',
+                    headers: { 'content-type': 'application/json' }
+                });
+                const responseData = await response?.json();
+                if (responseData?.isSuccess) {
+                    const rowElement = document.querySelector(`[data-row-id="${deleteRowId}"]`);
+                    if (rowElement) {
+                        const row = rowElement.closest("tr"); // Ensure it's the entire <tr>
+                        if (row) {
+                            row.remove();
+                        }
+                    }
+                    toastr.success(`<b>${responseData.responseData.name}</b> Region Deleted Successfully!!`, 'Success');
+                } else {
+                    toastr.error(`RegionId: ${deleteId} Not Deleted ${responseData.message} !!`, 'Error');
+                }
+            }
+
+        } catch (error) {
+            console.error(error);
+        }
+    });
+
+});

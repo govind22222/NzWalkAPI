@@ -35,8 +35,7 @@ namespace NZWalksWebApp.Controllers
             return View(regionsDto);
         }
 
-
-        public async Task<IActionResult> AddRegion()
+        public IActionResult AddRegion()
         {
             return View();
         }
@@ -105,6 +104,24 @@ namespace NZWalksWebApp.Controllers
             else
             {
                 return Json(new { isSuccess = false, message = "Region not Updated." });
+            }
+        }
+
+        [HttpDelete]
+        [Route("Regions/DeleteRegionUsingAPI/{deleteId:guid}")]
+        public async Task<IActionResult> DeleteRegionById([FromRoute] Guid deleteId)
+        {
+            var httpClient = _httpClient.CreateClient();
+            var deleteResponse = await httpClient.DeleteAsync($"https://localhost:7059/api/regions/{deleteId}");
+            if (deleteResponse.IsSuccessStatusCode)
+            {
+                var deletedRegionData = await deleteResponse.Content.ReadFromJsonAsync<RegionsDto>();
+                return Json(new { isSuccess = true, responseData = deletedRegionData, message = "Region Deleted." });
+            }
+            else
+            {
+                var errorMessage = await deleteResponse.Content.ReadAsStringAsync();
+                return Json(new { isSuccess = false, message = $"Region not Deleted. error:${errorMessage}" });
             }
         }
 

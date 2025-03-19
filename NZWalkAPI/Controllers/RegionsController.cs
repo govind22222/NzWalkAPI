@@ -105,7 +105,7 @@ namespace NZWalkAPI.Controllers
 
         [HttpDelete]
         [Route("{id:guid}")]
-        [Authorize(Roles = "WriteRole")]
+        //[Authorize(Roles = "WriteRole")]
         public async Task<IActionResult> DeleteRegion([FromRoute] Guid id)
         {
             var region = await _regions.DeleteRegion(id);
@@ -116,6 +116,5 @@ namespace NZWalkAPI.Controllers
             var regionDTO = _mapper.Map<RegionDTO>(region);
             return Ok(regionDTO);
         }
-
     }
 }

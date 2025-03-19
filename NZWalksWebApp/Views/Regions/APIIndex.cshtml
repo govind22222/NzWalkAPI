@@ -23,12 +23,16 @@
 					<td>@regionDto.Name</td>
 					<td>@regionDto.Code</td>
 					<td>@regionDto.RegionImageUrl</td>
-					<td><a type="button" class="btnEditData btn btn-light" asp-controller="Regions" asp-action="EditRegion" asp-route-id="@regionDto.Id">Edit</a></td>
-
+					<td class="d-flex justify-content-between">
+						<a class="btnEditData btn btn-outline-secondary mx-1" asp-controller="Regions" asp-action="EditRegion" asp-route-id="@regionDto.Id">Edit</a>
+						<button type="button" class="btnDeleteData btn btn-outline-danger" data-Id="@regionDto.Id" data-row-id="row-@regionDto.Id">Delete</button>
+					</td>
 				</tr>
 			}
 		</tbody>
 	</table>
 </div>
+
+
 
 

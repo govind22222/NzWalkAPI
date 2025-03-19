@@ -53,7 +53,7 @@ namespace NZWalkAPI.Repository
             regionData.Code = region.Code;
             regionData.RegionImageUrl = region.RegionImageUrl;
             using var transaction = _db.Database.BeginTransaction();
-            _db.Regions.Update(regionData);            
+            _db.Regions.Update(regionData);
             if (Convert.ToBoolean(await _db.SaveChangesAsync()))
             {
                 await transaction.CommitAsync();
@@ -68,8 +68,8 @@ namespace NZWalkAPI.Repository
 
         public async Task<Region?> DeleteRegion(Guid id)
         {
-            var region= await _db.Regions.FirstOrDefaultAsync(r => r.Id == id);
-            if(region == null)
+            var region = await _db.Regions.FirstOrDefaultAsync(r => r.Id == id);
+            if (region == null)
             {
                 return null;
             }
